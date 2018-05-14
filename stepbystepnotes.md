@@ -39,9 +39,12 @@ gunicorn --bind 0.0.0.0:5000 wsgi:app
 
 
 ### supervisor
+set a conf for supervisor to control the gunicorn
+```
+sudo nano /etc/supervisor/conf.d/gunicorn.conf
 ```
 
-sudo nano /etc/supervisor/conf.d/gunicorn.conf
+```
 [program:gunicorn]
 command = /home/ubuntu/myproject/myprojectenv/bin/gunicorn -w 4 -b 127.0.0.1:8000 -k gevent wsgi:app
 directory = /home/ubuntu/myproject
@@ -51,9 +54,10 @@ startsecs = 5
 startretries = 3
 user = ubuntu
 nodaemon = false
+```
+After set the conf: reload and check the supervisor:
 
-
-
+```
 sudo supervisorctl reload
 sudo supervisorctl status
 
@@ -63,6 +67,9 @@ sudo supervisorctl status
 ```
 sudo rm /etc/nginx/sites-enabled/default
 sudo nano /etc/nginx/sites-enabled/myproject
+```
+
+```
 server {
     # listen on port 80 (http)
     listen 80;
@@ -94,4 +101,12 @@ server {
 ```
 sudo supervisorctl reload
 sudo supervisorctl status
+```
+
+### If want to start/stop/restart Nginx:
+
+```
+sudo service nginx start
+sudo service nginx stop
+sudo service nginx restart
 ```
