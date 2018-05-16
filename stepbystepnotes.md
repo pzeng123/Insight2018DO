@@ -1,7 +1,10 @@
-## Install steps
+# Minute Commute Project Notes
 
-### ssh to aws instance
+## Test Run on AWS Instance
 
+
+### after ssh to a new AWS instance
+or use docker?
 ```
 sudo apt-get update
 sudo apt-get install python3-pip python3-dev nginx
@@ -14,7 +17,6 @@ sudo pip3 install virtualenv
 mkdir ~/myproject
 cd ~/myproject
 
-
 virtualenv myprojectenv
 source myprojectenv/bin/activate
 ```
@@ -26,9 +28,7 @@ pip install pymysql
 
 nano ~/myproject/myproject.py
 
-
 nano ~/myproject/wsgi.py
-
 
 gunicorn --bind 0.0.0.0:5000 wsgi:app
 
@@ -44,6 +44,9 @@ set a conf for supervisor to control the gunicorn
 sudo nano /etc/supervisor/conf.d/gunicorn.conf
 ```
 
+Care about the `wsgi` is the name of `wsgi.py`, `app` is the module in `wsgi.py`
+IP and Port `127.0.0.1:8000` is the same as in nginx config `http://127.0.0.1:8000`
+`user = ubuntu`, `command = /home/ubuntu/...`, `directory = /home/ubuntu/...` how to automatically adjust it?
 ```
 [program:gunicorn]
 command = /home/ubuntu/myproject/myprojectenv/bin/gunicorn -w 4 -b 127.0.0.1:8000 -k gevent wsgi:app
@@ -97,10 +100,14 @@ server {
 }
 ```
 
-### If index.html changed, restart supervisor:
+### If index.html changed, restart supervisor, check status.:
 ```
 sudo supervisorctl reload
 sudo supervisorctl status
+```
+Stop all the process in Supervisor:
+```
+sudo supervisorctl stop all
 ```
 
 ### If want to start/stop/restart Nginx:
@@ -110,3 +117,7 @@ sudo service nginx start
 sudo service nginx stop
 sudo service nginx restart
 ```
+
+
+## Using Docker on AWS Instance
+

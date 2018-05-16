@@ -1,0 +1,74 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%- extends "base.html" %}
+
+{% block head %}
+{{super()}}
+	<style>
+	       #map {
+		height: 500px;
+		width: 75%;
+	       }
+	</style>
+{% endblock %}
+
+
+
+
+
+{% block content %}
+   <div class="container">
+      <div class="jumbotron">
+        <h3>Appartment search results on map</h3>
+      </div>
+   </div>
+   <div class="container">
+	<div id="map"></div>
+	    <script> 
+	      var work_location = {lat: {{maymap[0][0]}}, lng: {{maymap[0][1]}}}    
+	      var neighborhoods = [
+		{lat: {{maymap[1][0]}}, lng: {{maymap[1][1]}}},
+		{lat: {{maymap[2][0]}}, lng: {{maymap[2][1]}}},
+		{lat: {{maymap[3][0]}}, lng: {{maymap[3][1]}}},
+		{lat: {{maymap[4][0]}}, lng: {{maymap[4][1]}}},
+		{lat: {{maymap[5][0]}}, lng: {{maymap[5][1]}}},
+		{lat: {{maymap[6][0]}}, lng: {{maymap[6][1]}}},
+		{lat: {{maymap[7][0]}}, lng: {{maymap[7][1]}}},
+	      ];
+
+	      var markers = [];
+	      var map;
+
+	      function initMap() {
+
+		map = new google.maps.Map(document.getElementById('map'), {
+		  zoom: 8,
+		  center: work_location
+		});
+
+		for (var i = 0; i < neighborhoods.length; i++) {
+		  markers.push(new google.maps.Marker({
+		    position: neighborhoods[i],
+		    map: map,
+		  }));
+
+		};
+	      }
+	    </script>
+	    <script async defer
+	    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAR_DilTDbOygc1nmD-VSyu3UbSmOkGSfc&callback=initMap">
+	    </script>
+   </div>
+   <div class="container">
+	<h3>Appartment search results list </h3>
+
+      <p>{{maymap[0]}} : {{ mytime[0] }} </p>
+      <p>{{maymap[1]}} : {{ mytime[1] }} </p>
+      <p>{{maymap[2]}} : {{ mytime[2] }} </p>
+      <p>{{maymap[3]}} : {{ mytime[3] }} </p>
+   </div>
+
+
+
+
+{%- endblock %}
