@@ -4,23 +4,21 @@
 FROM ubuntu:16.04
 LABEL author="Peng"
 
-# 安装git、python、nginx、supervisor
-RUN apt-get update
-RUN apt-get install -y git python pthon-dev python-setuptools python-pip \
-        nginx supervisor libmysqlclient-dev
-RUN pip install gunicorn
-RUN pip install setuptools
+# install python3 nginx supervisor gunicorn
+RUN apt-get update && apt-get install -y python3 pthon3-dev python3-pip \
+        nginx supervisor
+RUN pip3 install gunicorn setuptools
 
-# 环境变量
-ENV MYSQL_DATABASE_NAME MCdatabase
-ENV EMAIL_HOST_USER my-email@email.com
-ENV EMAIL_HOST_PASSWORD my-secret-email-password
 
 # Build Folder
-RUN mkdir -p /deploy/MC
-COPY . /deploy/MC
-# Install requirements
-RUN pip install -r /deploy/MC/Docker/Main/requirements.txt
+RUN mkdir -p /deploy/MinuteCommute
+WORKDIR /deploy/MinuteCommute
+#at first copy requirements.txt.
+COPY MinuteCommute/requirements.txt /deploy/MinuteCommute/requirements.txt
+RUN pip3 install -r /deploy/MinuteCommute/requirements.txt
+
+
+COPY MinuteCommute /deploy/MinuteCommute
 
 # Setup nginx
 RUN rm /etc/nginx/sites-enabled/default
@@ -30,8 +28,9 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 # Setup supervisord
 RUN mkdir -p /var/log/supervisor
-COPY supervisor-app.conf /etc/supervisor/conf.d/
-COPY gunicorn.conf /etc/supervisor/conf.d/
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY gunicorn.conf /etc/supervisor/conf.d/gunicorn.conf
 
 EXPOSE 80
+
 CMD ["/usr/bin/supervisord"]
