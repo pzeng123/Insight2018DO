@@ -143,3 +143,10 @@ cd into Insight2018DO and build docker
 ```
 docker build -t mc1 .
 ```
+
+
+run docker image just built
+```
+docker run -p 80:80 mc1
+```
+
