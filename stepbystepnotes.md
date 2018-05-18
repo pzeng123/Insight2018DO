@@ -134,3 +134,12 @@ then install git
 ```
 sudo yum install -y git
 ```
+
+git clone this repo
+```
+git clone https://github.com/pzeng123/Insight2018DO.git
+```
+cd into Insight2018DO and build docker
+```
+docker build -t mc1 .
+```
