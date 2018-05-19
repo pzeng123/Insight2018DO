@@ -121,3 +121,32 @@ sudo service nginx restart
 
 ## Using Docker on AWS Instance
 
+Launch a new Amazon Linux VM, then install Docker and git
+```
+sudo yum update -y
+sudo yum install -y docker
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+```
+log out and log in to pickup the added group
+
+then install git
+```
+sudo yum install -y git
+```
+
+git clone this repo
+```
+git clone https://github.com/pzeng123/Insight2018DO.git
+```
+cd into Insight2018DO and build docker
+```
+docker build -t mc1 .
+```
+
+
+run docker image just built
+```
+docker run -p 80:80 mc1
+```
+
