@@ -6,7 +6,7 @@ LABEL author="Peng"
 
 # 安装git、python、nginx、supervisor
 RUN apt-get update
-RUN apt-get install -y git python pthon-dev python-setuptools python-pip \
+RUN apt-get install -y git python python-dev python-setuptools python-pip \
         nginx supervisor libmysqlclient-dev
 RUN pip install gunicorn
 RUN pip install setuptools

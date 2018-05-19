@@ -68,12 +68,24 @@ def index():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-
+	
+@app.route("/map")
+def map():
+    mymap = []
+    mytime = []
+    with open('position3.txt', "r") as inputfile:
+        for current_appartment in inputfile:
+            current_appartment = current_appartment.strip().split('|')
+            location = [float(current_appartment[0].split(',')[0]), float(current_appartment[0].split(',')[1])]
+            time = float(current_appartment[1])
+            mymap.append(location)
+            mytime.append(time)
+    return render_template('map.html', maymap=mymap, mytime=mytime)
 
 @app.route("/about")
 def about():
     return render_template('about.html')
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0',port = 8000, debug=True)
 
