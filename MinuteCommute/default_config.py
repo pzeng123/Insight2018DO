@@ -1,7 +1,28 @@
-# The default_config module automatically gets imported by Appconfig, if it
-# exists. See https://pypi.python.org/pypi/flask-appconfig for details.
+import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
-# Note: Don't *ever* do this in a real app. A secret key should not have a
-#       default, rather the app should fail if it is missing. For the sample
-#       application, one is provided for convenience.
-SECRET_KEY = 'devkey'
+
+class Config(object):
+    DEBUG = False
+    TESTING = False
+    CSRF_ENABLED = True
+    SECRET_KEY = 'my-secret-key'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgresqluser:postgresqlpassword@localhost/Listings' 
+
+
+class ProductionConfig(Config):
+    DEBUG = False
+
+
+class StagingConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+
+
+class DevelopmentConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+
+
+class TestingConfig(Config):
+    TESTING = True

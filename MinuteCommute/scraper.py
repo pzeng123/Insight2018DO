@@ -5,36 +5,42 @@ from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean
 from sqlalchemy.orm import sessionmaker
 from dateutil.parser import parse
 import time
-import settings
-
-engine = create_engine('sqlite:///listings.db', echo=False)
-
-Base = declarative_base()
-
-class Listing(Base):
-    """
-    A table to store data on craigslist listings.
-    """
-
-    __tablename__ = 'listings'
-
-    id = Column(Integer, primary_key=True)
-    link = Column(String, unique=True)
-    created = Column(DateTime)
-    geotag = Column(String)
-    lat = Column(Float)
-    lon = Column(Float)
-    name = Column(String)
-    price = Column(Float)
-    location = Column(String)
-    cl_id = Column(Integer, unique=True)
-    area = Column(String)
+import config 
+from models import Listing
+from app import db
+import datetime
 
 
-Base.metadata.create_all(engine)
 
-Session = sessionmaker(bind=engine)
-session = Session()
+
+# engine = create_engine('sqlite:///listings.db', echo=False)
+
+# Base = declarative_base()
+
+# class Listing(Base):
+    # """
+    # A table to store data on craigslist listings.
+    # """
+
+    # __tablename__ = 'listings'
+
+    # id = Column(Integer, primary_key=True)
+    # link = Column(String, unique=True)
+    # created = Column(DateTime)
+    # geotag = Column(String)
+    # lat = Column(Float)
+    # lon = Column(Float)
+    # name = Column(String)
+    # price = Column(Float)
+    # location = Column(String)
+    # cl_id = Column(Integer, unique=True)
+    # area = Column(String)
+
+
+# Base.metadata.create_all(engine)
+
+# Session = sessionmaker(bind=engine)
+# session = Session()
 
 def scrape_area(area):
     """
@@ -42,11 +48,11 @@ def scrape_area(area):
     :param area:
     :return: A list of results.
     """
-    cl_h = CraigslistHousing(site=settings.CRAIGSLIST_SITE, area=area, category=settings.CRAIGSLIST_HOUSING_SECTION,
-                             filters={'max_price': settings.MAX_PRICE, "min_price": settings.MIN_PRICE})
+    cl_h = CraigslistHousing(site=config.CRAIGSLIST_SITE, area=area, category=config.CRAIGSLIST_HOUSING_SECTION,
+                             filters={'max_price': config.MAX_PRICE, "min_price": config.MIN_PRICE})
 
     results = []
-    gen = cl_h.get_results(sort_by='newest', geotagged=True, limit=2)
+    gen = cl_h.get_results(sort_by='newest', geotagged=True, limit=10)
     while True:
         try:
             result = next(gen)
@@ -54,7 +60,7 @@ def scrape_area(area):
             break
         except Exception:
             continue
-        listing = session.query(Listing).filter_by(cl_id=result["id"]).first()
+        listing = Listing.query.filter_by(cl_id=result["id"]).first()
 
         # Don't store the listing if it already exists.
         if listing is None:
@@ -76,22 +82,23 @@ def scrape_area(area):
             except Exception:
                 pass
 
-            # Create the listing object.
+            
+            print(parse(result["datetime"]))
             listing = Listing(
                 link=result["url"],
-                created=parse(result["datetime"]),
+                ptime=parse(result["datetime"]),
                 lat=lat,
                 lon=lon,
                 name=result["name"],
                 price=price,
                 location=result["where"],
-                cl_id=result["id"],
+                cl_id=str(result["id"]),
                 area=result["area"],
             )
 
             # Save the listing so we don't grab it again.
-            session.add(listing)
-            session.commit()
+            db.session.add(listing)
+            db.session.commit()
 
             # Return the result 
             results.append(result)
@@ -107,16 +114,11 @@ def do_scrape():
 
     # Get all the results from craigslist.
     all_results = []
-    for area in settings.AREAS:
+    for area in config.AREAS:
         results = scrape_area(area)
 
         all_results += results
 
     print("{}: Got {} results".format(time.ctime(), len(all_results)))
 
-    # Post each result to file.
 
-
-
-
-do_scrape()

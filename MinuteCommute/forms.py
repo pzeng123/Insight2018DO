@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import *
+from wtforms import TextField, SubmitField
 from wtforms.validators import Required, Email
 
 
-class SignupForm(FlaskForm):
-    name = TextField(u' ', validators=[Required()])
+class Addressform(FlaskForm):
+    address = TextField(u'Address', validators=[Required()])
     submit = SubmitField(u'Submit')
