@@ -41,7 +41,7 @@ CRAIGSLIST_HOUSING_SECTION = 'apa'
 # How long we should sleep between scrapes of Craigslist.
 # Too fast may get rate limited.
 # Too slow may miss listings.
-SLEEP_INTERVAL = 6 * 60 * 60 # 6 hours
+SLEEP_INTERVAL = 4 * 60 * 60 # 4 hours
 
 
 # Any private settings are imported here.

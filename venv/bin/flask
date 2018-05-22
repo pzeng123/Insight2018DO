@@ -1,11 +1,12 @@
 #!/home/peng/Insight2018DO/venv/bin/python
-
-# -*- coding: utf-8 -*-
+# EASY-INSTALL-ENTRY-SCRIPT: 'Flask','console_scripts','flask'
+__requires__ = 'Flask'
 import re
 import sys
-
-from flask_appconfig.cli import cli
+from pkg_resources import load_entry_point
 
 if __name__ == '__main__':
     sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
-    sys.exit(cli())
+    sys.exit(
+        load_entry_point('Flask', 'console_scripts', 'flask')()
+    )

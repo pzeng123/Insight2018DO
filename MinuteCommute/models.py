@@ -55,10 +55,10 @@ class Commutetime(db.Model):
     ori_geotag = db.Column(db.String(64))
     ori_lat = db.Column(db.Float)
     ori_lon = db.Column(db.Float)
-    dri_time = db.Column(db.Integer)
-    wlk_time = db.Column(db.Integer)
-    bik_time = db.Column(db.Integer)
-    bus_time = db.Column(db.Integer)
+    dri_time = db.Column(db.String(32))
+    wlk_time = db.Column(db.String(32))
+    bik_time = db.Column(db.String(32))
+    bus_time = db.Column(db.String(32))
 
     def __init__(self, req_time, dest_geotag, dest_lat, dest_lon, ori_geotag, ori_lat, ori_lon, dri_time, wlk_time, bik_time, bus_time):
         self.req_time = req_time
