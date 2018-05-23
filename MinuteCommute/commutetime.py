@@ -13,13 +13,31 @@ mode_list = ['driving', 'walking', 'bicycling', 'transit']
 
 # destination = '260 sheridan ave, Palo Alto, CA 94306'
 
-def  calctime(current_apartment, work_location):
+def  calctime(current_apartment, work_location, cl_id):
 
-    # if 2 locations are already in Commutetime database, no need calculate again
-    if len(Commutetime.query.filter_by(ori_geotag=str(current_apartment)).filter_by(dest_geotag=str(work_location)).all()) > 0:
+    # if 2 locations are already in Commutetime database, no need calculate again, but record cl_id
+    stored_commutepair = Commutetime.query.filter_by(ori_geotag=str(current_apartment)).filter_by(dest_geotag=str(work_location)).all()
+    if len(stored_commutepair) > 0:
         print('Already in db')
-        print(len(Commutetime.query.filter_by(ori_geotag=str(current_apartment)).filter_by(dest_geotag=str(work_location)).all()))
-        print(Commutetime.query.filter_by(ori_geotag=str(current_apartment)).filter_by(dest_geotag=str(work_location)).all()[0].dri_time)
+        print(len(stored_commutepair))
+        print(stored_commutepair[0].dri_time)
+        
+        
+        current_commutetime = Commutetime(
+            req_time = datetime.datetime.now(),
+            ori_geotag = stored_commutepair[0].ori_geotag,
+            ori_lat = stored_commutepair[0].ori_lat,
+            ori_lon = stored_commutepair[0].ori_lon,
+            dest_geotag = stored_commutepair[0].dest_geotag,
+            dest_lat = stored_commutepair[0].dest_lat,
+            dest_lon = stored_commutepair[0].dest_lon,
+            dri_time = stored_commutepair[0].dri_time,
+            wlk_time = stored_commutepair[0].wlk_time,
+            bik_time = stored_commutepair[0].bik_time,
+            bus_time = stored_commutepair[0].bus_time,
+            cl_id =cl_id,
+        )
+                
         return
 
     moderecord = []
@@ -48,11 +66,12 @@ def  calctime(current_apartment, work_location):
         wlk_time = moderecord[1],
         bik_time = moderecord[2],
         bus_time = moderecord[3],
+        cl_id = cl_id
     )
     db.session.add(current_commutetime)
     db.session.commit() 
  
-def comtime(work_location): 
+def comtime(work_location, lowprice, highprice): 
     destination = work_location.replace(' ', '+')
     request = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + destination + '&key=' + api_key
     response = urllib.request.urlopen(request).read()
@@ -74,10 +93,10 @@ def comtime(work_location):
     print(('work_location = {}, apartments =  {}').format(work_location, apartments))
 
     for apartment in apartments:
-        calctime((apartment.lat, apartment.lon), work_location)   
+        calctime((apartment.lat, apartment.lon), work_location, apartment.cl_id)   
      
     # ordered table data    
-    tabledata = Commutetime.query.filter_by(dest_geotag=str(work_location)).order_by(Commutetime.dri_time).limit(20).all()
+    tabledata = Commutetime.query.filter_by(dest_geotag=str(work_location)).filter_by().order_by(Commutetime.dri_time).limit(20).all()
     print('tabledata = {}'.format(tabledata))
     records = []
     for row in tabledata:
