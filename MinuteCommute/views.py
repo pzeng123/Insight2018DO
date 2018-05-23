@@ -21,8 +21,14 @@ def page_not_found(e):
 	
 @app.route('/map', methods=['GET', 'POST'])
 def map():
-    work_address = request.form['address']
-    records = commutetime.comtime(work_address)
+    userinput = request.form['address']
+    print(userinput)
+    work_address, lowprice, highprice = userinput.split('|')
+    print(work_address, lowprice, highprice)
+
+
+    
+    records = commutetime.comtime(work_address, lowprice, highprice)
     house_locations = [[record[5], record[6]] for record in records]
     print(house_locations)
     work_location = [records[0][2], records[0][3]]

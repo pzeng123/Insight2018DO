@@ -52,7 +52,7 @@ def scrape_area(area):
                              filters={'max_price': config.MAX_PRICE, "min_price": config.MIN_PRICE})
 
     results = []
-    gen = cl_h.get_results(sort_by='newest', geotagged=True, limit=10)
+    gen = cl_h.get_results(sort_by='newest', geotagged=True, limit=30)
     while True:
         try:
             result = next(gen)

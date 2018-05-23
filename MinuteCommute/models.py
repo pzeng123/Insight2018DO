@@ -20,7 +20,7 @@ class Listing(db.Model):
     location = db.Column(db.String(120))
     cl_id = db.Column(db.String(64), unique=True)
     area = db.Column(db.String(120))
-
+	
 
     def __init__(self, link, ptime, lat, lon, name, price, location, cl_id, area):
         self.link = link
@@ -59,8 +59,9 @@ class Commutetime(db.Model):
     wlk_time = db.Column(db.String(32))
     bik_time = db.Column(db.String(32))
     bus_time = db.Column(db.String(32))
+    cl_id = db.Column(db.String(64))
 
-    def __init__(self, req_time, dest_geotag, dest_lat, dest_lon, ori_geotag, ori_lat, ori_lon, dri_time, wlk_time, bik_time, bus_time):
+    def __init__(self, req_time, dest_geotag, dest_lat, dest_lon, ori_geotag, ori_lat, ori_lon, dri_time, wlk_time, bik_time, bus_time, cl_id):
         self.req_time = req_time
         self.dest_geotag = dest_geotag
         self.dest_lat = dest_lat
@@ -72,7 +73,8 @@ class Commutetime(db.Model):
         self.wlk_time = wlk_time
         self.bik_time = bik_time
         self.bus_time = bus_time
+        self.cl_id = cl_id
     
     
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return '<{} ---> {}>'.format(self.ori_geotag, self.dest_geotag)
