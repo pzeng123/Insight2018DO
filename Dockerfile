@@ -1,7 +1,7 @@
 #
 
 
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 LABEL author="Peng"
 
 # install python3 nginx supervisor gunicorn
@@ -14,17 +14,16 @@ RUN pip3 install gunicorn setuptools
 RUN mkdir -p /deploy/MinuteCommute
 WORKDIR /deploy/MinuteCommute
 #at first copy requirements.txt.
-COPY MinuteCommute/requirements.txt /deploy/MinuteCommute/requirements.txt
+COPY requirements.txt /deploy/MinuteCommute
 RUN pip3 install -r /deploy/MinuteCommute/requirements.txt
 
 
-COPY MinuteCommute /deploy/MinuteCommute
+COPY . /deploy/MinuteCommute
 
 # Setup nginx
-RUN rm /etc/nginx/sites-enabled/default
-COPY nginx-app.conf /etc/nginx/sites-available/
-RUN ln -s /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-enabled/nginx-app.conf
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+RUN rm /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/
+COPY nginx-app.conf /etc/nginx/conf.d/
 
 # Setup supervisord
 RUN mkdir -p /var/log/supervisor
