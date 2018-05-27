@@ -17,4 +17,4 @@ if __name__ == "__main__":
             traceback.print_exc()
         else:
             print("{}: Successfully finished scraping".format(time.ctime()))
-        time.sleep(settings.SLEEP_INTERVAL)
+        time.sleep(config.SLEEP_INTERVAL)

@@ -2,9 +2,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 TESTING = False
-CSRF_ENABLED = True
-SECRET_KEY = 'my-secret-key'
-SQLALCHEMY_DATABASE_URI = 'postgresql://mydbuser:password@localhost/mydb' 
+
 	
 
 ## Price

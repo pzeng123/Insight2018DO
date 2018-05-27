@@ -1,6 +1,7 @@
-from app import db
-from sqlalchemy.dialects.postgresql import JSON
+from project import db
+#from sqlalchemy.dialects.postgresql import JSON
 
+## 2 SQL Tables: 'Listing' and 'Commutetime'
 
 class Listing(db.Model):
     """

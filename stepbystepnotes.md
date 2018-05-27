@@ -211,7 +211,17 @@ Docker version 18.05.0-ce-rc1, build 33f00ce
 
 
 
+## ports vs expose in Dockerfile
+https://stackoverflow.com/questions/40801772/what-is-the-difference-between-docker-compose-ports-vs-expose
 
+
+
+## reference
+http://www.ameyalokare.com/docker/2017/09/20/nginx-flask-postgres-docker-compose.html
+https://github.com/juggernaut/nginx-flask-postgres-docker-compose-example
+
+http://www.patricksoftwareblog.com/how-to-use-docker-and-docker-compose-to-create-a-flask-application/
+https://gitlab.com/patkennedy79/flask_recipe_app
 
 
 

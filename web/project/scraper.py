@@ -1,46 +1,10 @@
 from craigslist import CraigslistHousing
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, Float, Boolean
-from sqlalchemy.orm import sessionmaker
 from dateutil.parser import parse
 import time
 import config 
 from models import Listing
-from app import db
+from project import db
 import datetime
-
-
-
-
-# engine = create_engine('sqlite:///listings.db', echo=False)
-
-# Base = declarative_base()
-
-# class Listing(Base):
-    # """
-    # A table to store data on craigslist listings.
-    # """
-
-    # __tablename__ = 'listings'
-
-    # id = Column(Integer, primary_key=True)
-    # link = Column(String, unique=True)
-    # created = Column(DateTime)
-    # geotag = Column(String)
-    # lat = Column(Float)
-    # lon = Column(Float)
-    # name = Column(String)
-    # price = Column(Float)
-    # location = Column(String)
-    # cl_id = Column(Integer, unique=True)
-    # area = Column(String)
-
-
-# Base.metadata.create_all(engine)
-
-# Session = sessionmaker(bind=engine)
-# session = Session()
 
 def scrape_area(area):
     """
@@ -51,7 +15,6 @@ def scrape_area(area):
     cl_h = CraigslistHousing(site=config.CRAIGSLIST_SITE, area=area, category=config.CRAIGSLIST_HOUSING_SECTION,
                              filters={'max_price': config.MAX_PRICE, "min_price": config.MIN_PRICE})
 
-    results = []
     gen = cl_h.get_results(sort_by='newest', geotagged=True, limit=30)
     while True:
         try:
@@ -84,28 +47,26 @@ def scrape_area(area):
 
             
             print(parse(result["datetime"]))
-            listing = Listing(
-                link=result["url"],
-                ptime=parse(result["datetime"]),
-                lat=lat,
-                lon=lon,
-                name=result["name"],
-                price=price,
-                location=result["where"],
-                cl_id=str(result["id"]),
-                area=result["area"],
-            )
+            try:
+                listing = Listing(
+                    link=result["url"],
+                    ptime=parse(result["datetime"]),
+                    lat=lat,
+                    lon=lon,
+                    name=result["name"],
+                    price=price,
+                    location=result["where"],
+                    cl_id=str(result["id"]),
+                    area=result["area"],
+                )
+            except Exception:
+                return
+                
 
             # Save the listing so we don't grab it again.
             db.session.add(listing)
             db.session.commit()
 
-            # Return the result 
-            results.append(result)
-            with open('position.txt', 'a') as f:
-                f.write(str(lat) + ',' + str(lon) + '\n')
-
-    return results
 
 def do_scrape():
     """
@@ -116,8 +77,10 @@ def do_scrape():
     all_results = []
     for area in config.AREAS:
         results = scrape_area(area)
-
-        all_results += results
+        print(results)
+        print(all_results)
+        if results:
+            all_results += results
 
     print("{}: Got {} results".format(time.ctime(), len(all_results)))
 
