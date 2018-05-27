@@ -9,7 +9,7 @@ services:
     volumes:
       - /usr/src/app/web/project/static
     command: /usr/local/bin/gunicorn -w 2 -b :8000 project:app
-  networks:
+    networks:
       - db_nw
       - web_nw
     depends_on:
@@ -22,7 +22,7 @@ services:
       - "80:80"
     volumes:
       - /www/static
-	networks:
+    networks:
       - web_nw
     depends_on:
       - web
@@ -32,9 +32,9 @@ services:
     build: ./postgresql
     expose:
       - "5432"
-	volumes:
+    volumes:
       - /var/lib/postgresql
-	networks:
+    networks:
       - db_nw
 
 networks:
