@@ -3,4 +3,3 @@ FROM postgres:9.6
 ENV POSTGRES_USER mydbuser
 ENV POSTGRES_PASSWORD password
 ENV POSTGRES_DB mydb
-

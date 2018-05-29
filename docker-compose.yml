@@ -5,14 +5,10 @@ services:
     restart: always
     build: ./web
     expose:
-        - "8000"
+      - "8000"
     volumes:
-      - /usr/src/app/web
-    command: ./wait-for-it.sh -t 20 postgres:5432 -- /usr/local/bin/gunicorn -w 2 -b 127.0.0.1:8000 project:app       
-
-    networks:
-      - db_nw
-      - web_nw
+      - /usr/src/app/web/project/static
+    command: /usr/local/bin/gunicorn -w 2 -b :8000 project:app
     depends_on:
       - postgres
 
@@ -23,25 +19,21 @@ services:
       - "80:80"
     volumes:
       - /www/static
-    networks:
-      - web_nw
     volumes_from:
       - web
     depends_on:
       - web
 
+  data:
+    image: postgres:9.6
+    volumes:
+      - /var/lib/postgresql
+    command: "true"
+
   postgres:
     restart: always
     build: ./postgresql
+    volumes_from:
+      - data
     expose:
       - "5432"
-    volumes:
-      - /var/lib/postgresql
-    networks:
-      - db_nw
-
-networks:
-  db_nw:
-    driver: bridge
-  web_nw:
-    driver: bridge

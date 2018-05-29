@@ -13,7 +13,7 @@ mode_list = ['driving', 'walking', 'bicycling', 'transit']
 # destination = '260 sheridan ave, Palo Alto, CA 94306'
 
 def  calctime(current_apartment, work_location, cl_id):
-    
+
     # if too far direct distance > 40mile
     if (work_location[0] - current_apartment[0])**2 + (work_location[1] - current_apartment[1])**2 >= 0.36:
         return 1
@@ -50,9 +50,9 @@ def  calctime(current_apartment, work_location, cl_id):
 
     moderecord = []
     for mode in mode_list:
-        
+
         now = datetime.datetime.now()
-        departure_time = now.replace(hour=8, minute=0)
+        departure_time = now.replace(hour=8, minute=0) + datetime.timedelta(days=1)
         sorigin = str(current_apartment[0]) + ',' + str(current_apartment[1])
         sdest = str(work_location[0]) + ',' + str(work_location[1])
 #        print(sorigin)
@@ -129,4 +129,3 @@ def comtime(work_location, lowprice, highprice):
     
 #    print(records)
     return records
-
