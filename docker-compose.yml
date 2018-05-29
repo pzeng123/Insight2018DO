@@ -5,10 +5,10 @@ services:
     restart: always
     build: ./web
     expose:
-      - "8000"
+        - "8000"
     volumes:
-      - /usr/src/app/web/project/static
-    command: /usr/local/bin/gunicorn -w 2 -b :8000 project:app
+      - /usr/src/app/web
+    command: ./wait-for-it.sh postgres:5432 -- /usr/local/bin/gunicorn -w 2 -b 127.0.0.1:8000 project:app
     networks:
       - db_nw
       - web_nw
@@ -24,6 +24,8 @@ services:
       - /www/static
     networks:
       - web_nw
+    volumes_from:
+      - web
     depends_on:
       - web
 

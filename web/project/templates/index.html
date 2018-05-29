@@ -16,9 +16,10 @@
  <link type="text/css" rel="stylesheet" href="//www.renttoown.cc/sites/renttoown.cc/files/advagg_css/css__Kn7rq_w47kGSLm-p4dtThSbERXOSSeGP-gIFOypwbWU__GNIfSRlYM3GyGoOoDNg1T9mX6hoF0YRf6Smvun8dd1I__RMgu5qzjBcImi0Ar6L2_gr_gZGYJ0RtuDzD0PuD3HQA.css" media="all" />
  
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   <script>
     var p1 = 1000;
     var p2 = 3500;
@@ -38,22 +39,7 @@
       " - $" + $( "#slider-range" ).slider( "values", 1 ) );
   } );
   </script>
-	
-    <script>
 
-function checkForm(){
-    var form1 = document.getElementById('testform');
-    if (form1.address.value == null):{
-      alert("invalid input")
-      return false;
-    }
-    s1 = p1.toString();
-    s2 = p2.toString();
-    form1.address.value =  document.getElementById('address').value + '|' + s1 + '|' + s2;
-
-    return ture;
-}
-    </script>
 <style>
         /* override Bootstrap's container */
         .container-fluid {
@@ -63,7 +49,8 @@ function checkForm(){
             margin-left:0
          }
 
-    </style>
+</style>
+  
 </head>
 	
 	
@@ -116,15 +103,46 @@ function checkForm(){
 			
 		<p> &nbsp;</p>
 
+    	<div class="col-md-2 col-md-offset-5">
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-warning alert-dismissible" role="alert">
+      <span type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></span>
+      <strong>{{ message }}</strong>      
+      </div>
+   
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+	</div>
+			<p> &nbsp;</p>
+<script>
+
+function checkForm(){
+    var form1 = document.getElementById('testform');
+    var address1 = document.getElementById('address');
+    var address2 = document.getElementById('myinput');
+    s1 = p1.toString();
+    s2 = p2.toString();
+    address1.value = address1.value + '|' + s1 + '|' + s2;
+    form1.address.value =  address1.value;
+    form1.myinput.value = address1.value;
+    return ture;
+}
+</script>
 	
 
         <div class=" container text-center">
             <div class="search-box">
-                <form class="form-inline" id="testform" onsubmit="return checkForm()" action="/map" method="post" accept-charset="UTF-8">
+                <form class="form-inline" name="testform" id="testform" onsubmit="return checkForm();" action="/map" method="post" accept-charset="UTF-8">
                     <div class="form-group form-group-lg has-feedback has-feedback-left col s6">
                        <input name="address" id="address" type="text" class="form-control"  style="font-size: 14px;" placeholder="Enter Your Working Address" value="" size="20" maxlength="128" class="validate"/> 
                        <i class="glyphicon glyphicon-map-marker form-control-feedback"></i>
+                       <input type="hidden" name="myinput" id="myinput" value="0" />
+
                    </div>
                     <button class="btn btn-lg btn-primary" value="search" type="submit"> <span class="glyphicon glyphicon-search" ></span>Search </button>
                 </form>

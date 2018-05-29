@@ -255,7 +255,7 @@ git push -u origin feature_branch_name
 
 
 ## postgresql
-
+```
 一、安装
 
 首先，安装PostgreSQL客户端。
@@ -405,11 +405,17 @@ ALTER TABLE user_tbl RENAME TO backup_tbl;
 
 # 删除表格 
 DROP TABLE IF EXISTS backup_tbl;
+```
 
 
 
 
+# others
 
+in `__init__.py`
+`db.drop_all()` before `db.create_all()`
+or will be `sqlalchemy.exc.IntegrityError: (psycopg2.IntegrityError) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+` error because database was there.
 
 
 

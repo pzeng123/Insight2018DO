@@ -1,4 +1,4 @@
-from scraper import do_scrape
+from project.scraper import do_scrape
 import config
 import time
 import sys

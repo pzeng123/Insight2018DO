@@ -1,8 +1,8 @@
 from craigslist import CraigslistHousing
 from dateutil.parser import parse
 import time
-import config 
-from models import Listing
+import project.scraper_setting 
+from project.models import Listing
 from project import db
 import datetime
 
@@ -12,8 +12,8 @@ def scrape_area(area):
     :param area:
     :return: A list of results.
     """
-    cl_h = CraigslistHousing(site=config.CRAIGSLIST_SITE, area=area, category=config.CRAIGSLIST_HOUSING_SECTION,
-                             filters={'max_price': config.MAX_PRICE, "min_price": config.MIN_PRICE})
+    cl_h = CraigslistHousing(site=project.scraper_setting.CRAIGSLIST_SITE, area=area, category=project.scraper_setting.CRAIGSLIST_HOUSING_SECTION,
+                             filters={'max_price': project.scraper_setting.MAX_PRICE, "min_price": project.scraper_setting.MIN_PRICE})
 
     gen = cl_h.get_results(sort_by='newest', geotagged=True, limit=30)
     while True:
@@ -75,7 +75,7 @@ def do_scrape():
 
     # Get all the results from craigslist.
     all_results = []
-    for area in config.AREAS:
+    for area in project.scraper_setting.AREAS:
         results = scrape_area(area)
         print(results)
         print(all_results)
