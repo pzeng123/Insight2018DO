@@ -22,20 +22,9 @@ app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-from project.models import Listing, Commutetime
-
-db.drop_all()
-db.create_all()
-
-print('db init')
 
 
-import project.commutetime
-import project.scraper
 
-scraper.do_scrape()
-
-print('scraper finish')
 
 @app.route('/')
 def index():

@@ -160,11 +160,12 @@ docker run -p 80:80 mc1
 
 https://unix.stackexchange.com/questions/363048/unable-to-locate-package-docker-ce-on-a-64bit-ubuntu
 You can install docker-ce on Ubuntu 16.04 as follows:
-
+```
 sudo apt-get install apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
 sudo apt-get update
+```
 Run the following
 
 apt-cache search docker-ce
@@ -172,8 +173,9 @@ sample output:
 
 docker-ce - Docker: the open-source application container engine
 Install docker-ce:
-
+```
 sudo apt-get install docker-ce
+```
 Update Jan 03 2018
 
 installing docker-ce on Ubuntu 17.10 :
