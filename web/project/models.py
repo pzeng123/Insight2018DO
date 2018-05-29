@@ -46,10 +46,10 @@ class Commutetime(db.Model):
     A table to store commute time between work location and post listings.
     """
 
-    __tablename__ = 'commutetime'
+    __tablename__ = 'commutetimedata'
 
     id = db.Column(db.Integer, primary_key=True)
-    req_time = db.Column(db.DateTime)
+    req_time = db.Column(db.DateTime,  unique=True)
     dest_geotag = db.Column(db.String(64))
     dest_lat = db.Column(db.Float)
     dest_lon = db.Column(db.Float)

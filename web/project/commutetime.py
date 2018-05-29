@@ -41,6 +41,8 @@ def  calctime(current_apartment, work_location, cl_id):
                 bus_time = stored_commutepair[0].bus_time,
                 cl_id =cl_id,
             )
+            db.session.add(current_commutetime)
+            db.session.commit() 
         except Exception:
             return 5
                 
@@ -85,11 +87,13 @@ def  calctime(current_apartment, work_location, cl_id):
             bus_time = moderecord[3],
             cl_id = cl_id
         )
+        
+        db.session.add(current_commutetime)
+        db.session.commit() 
     except Exception:
         print('Commutetime table error')
         return 5 
-    db.session.add(current_commutetime)
-    db.session.commit() 
+
     return 4
  
 def comtime(work_location, lowprice, highprice): 
