@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  {% if title %}
+    <title>{{title}}</title>
+  {% else %}
+    <title>MinuteCommute</title>
+  {% endif %}
+<!--   <link href="/static/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="/static/sample-app.css" rel="stylesheet" type="text/css"> -->
+ <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+
+  
+ <link href="//bootswatch.com/3/cerulean/bootstrap.min.css" rel="stylesheet" type="text/css">
+ <link type="text/css" rel="stylesheet" href="//www.renttoown.cc/sites/renttoown.cc/files/advagg_css/css__Kn7rq_w47kGSLm-p4dtThSbERXOSSeGP-gIFOypwbWU__GNIfSRlYM3GyGoOoDNg1T9mX6hoF0YRf6Smvun8dd1I__RMgu5qzjBcImi0Ar6L2_gr_gZGYJ0RtuDzD0PuD3HQA.css" media="all" />
+ 
+
+<style>
+        /* override Bootstrap's container */
+        .container-fluid {
+            padding-right:0;
+            padding-left:0;
+            margin-right:0;
+            margin-left:0
+         }
+
+    </style>
+</head>
+<body style = "background-color: #2fa4e7">
+
+<header id="navbar" role="banner" class="navbar-default">
+   <div class="container">
+      <div class="navbar-header">
+                     <a class="logo navbar-btn pull-left" href="/" title="Home">
+				  <img src="/static/img/001.png" alt="Rocket" />
+		    </a>
+		 
+         
+         <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+		  <a class="navbar-brand" href="/">MinuteCommute</a>
+      </div>
+            <div class="navbar-collapse collapse">
+        <nav role="navigation">
+		
+		
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+				<li><a href="/">Github</a></li>
+				<li><a href="/">Google Slides</a></li>
+            </ul>
+			</nav>
+        </div>
+                   
+      </div>
+</header>
+    <div class="container-fluid">
+          {% block content %}{% endblock %}
+    </div> <!-- container-fluid -->
+
+{% include 'footer.html' %}
+
+
+</body>
+</html>
