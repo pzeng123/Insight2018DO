@@ -79,7 +79,12 @@ transit: 1 hour 42 mins
 * Container: Docker, Kubernetes
 
 
-
+##
+```
+sudo docker-compose build
+sudo docker-compose up -d
+sudo docker-compose run --rm web python ./instance/db_create.py
+```
 
 
 
