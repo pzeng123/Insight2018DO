@@ -52,7 +52,7 @@ def  calctime(current_apartment, work_location, cl_id):
     for mode in mode_list:
 
         now = datetime.datetime.now()
-        departure_time = now.replace(hour=8, minute=0) + datetime.timedelta(days=1)
+        departure_time = now.replace(hour=8, minute=0) + datetime.timedelta(days=7)
         sorigin = str(current_apartment[0]) + ',' + str(current_apartment[1])
         sdest = str(work_location[0]) + ',' + str(work_location[1])
 #        print(sorigin)
@@ -62,14 +62,16 @@ def  calctime(current_apartment, work_location, cl_id):
             return -1
         
         
-        duration = directions_result[0]['legs'][0]['duration']['text']
-        duration_traffic = duration
+#        duration = directions_result[0]['legs'][0]['duration']['text']
+        duration = directions_result[0]['legs'][0]['duration']['value']
         if mode == 'driving':
-            duration_traffic = directions_result[0]['legs'][0]['duration_in_traffic']['text']
-        duration_sec = directions_result[0]['legs'][0]['duration']['value']
-#        print(duration, duration_traffic, duration_sec)
-    
-        moderecord.append(duration)
+            duration_traffic = directions_result[0]['legs'][0]['duration_in_traffic']['value']
+            duration = duration_traffic
+        duration = duration//60
+        if duration <= 1:
+            duration_str = '1 minute'
+        duration_str = str(duration) + 'minutes'
+        moderecord.append(duration_str)
 #        print('moderecord = {}'.format(moderecord))
         
     try:
