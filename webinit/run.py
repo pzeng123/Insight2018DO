@@ -7,6 +7,7 @@ from project.base import session_factory
 import project.scraper
 import project.scraper_setting
 
+time.sleep(5)
 while True:
 	print("{}: Starting scrape cycle".format(time.ctime()))
 	try:
