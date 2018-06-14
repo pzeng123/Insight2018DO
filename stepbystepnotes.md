@@ -294,6 +294,25 @@ or will be `sqlalchemy.exc.IntegrityError: (psycopg2.IntegrityError) duplicate k
 ` error because database was there.
 
 
+## docker share volume between containers
+services:
+  nginx:
+    container_name: nginx
+    build: ./nginx/
 
+    volumes:
+      - static-content:/usr/src/app
 
+  web:
+    container_name: web
+    env_file: .env
+    volumes:
+      - static-content:/usr/src/app/public
+    environment:
+      - NODE_ENV=production
+
+    command: npm run package
+
+volumes:
+  static-content:
 
