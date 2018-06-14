@@ -27,4 +27,4 @@ while True:
 		traceback.print_exc()
 	else:
 		print("{}: Successfully finished scraping".format(time.ctime()))
-	time.sleep(scraper_setting.SLEEP_INTERVAL)
+	time.sleep(project.scraper_setting.SLEEP_INTERVAL)
