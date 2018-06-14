@@ -35,7 +35,7 @@ services:
     build: ./webinit
     volumes:
       - /usr/src/app/web/project/static
-    command: python run.py
+    command: python -u run.py
     depends_on:
       - postgres
     networks:
