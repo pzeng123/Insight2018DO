@@ -16,6 +16,7 @@
  <link type="text/css" rel="stylesheet" href="/static/app.css" media="all" />
  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
  <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+ <script src="//cdn.datatables.net/plug-ins/1.10.17/sorting/natural.js"></script>
  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
     
  <style>
@@ -138,8 +139,20 @@
 
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#datatable').dataTable();
+                $('#datatable').dataTable( {
+                    columnDefs: [
+                      null,
+                      null,
+                      { type: 'natural' },
+                      { type: 'natural' },
+                      { type: 'natural' },
+                      { type: 'natural' },
+                      ]
+                 } );
             });
+          
+          
+          $('#example').dataTable
         </script>
    </div>
 
