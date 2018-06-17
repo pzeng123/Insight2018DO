@@ -17,7 +17,7 @@ While distance is important, it is more critical that we need to consider the co
 
 
 Combine these two:
-![image](https://github.com/pzeng123/Insight2018DO/blob/master/img/1.png "image 1")
+![image](/img/1.png "image 1")
 
 
 
