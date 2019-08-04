@@ -15,13 +15,14 @@ MAX_PRICE = 3500
 # The Craigslist site you want to search on.
 # For instance, https://sfbay.craigslist.org is SF and the Bay Area.
 # You only need the beginning of the URL.
-CRAIGSLIST_SITE = 'sfbay'
+CRAIGSLIST_SITE = 'boston'
 
 # What Craigslist subdirectories to search on.
 # For instance, https://sfbay.craigslist.org/eby/ is the East Bay, and https://sfbay.craigslist.org/sfc/ is San Francisco.
 # You only need the last three letters of the URLs.
 # AREAS = ["eby", "sfc", "sby", "nby", "pen"]
-AREAS = ["sby", "pen"]
+# for boston: gbs nwb bmw nos sob
+AREAS = ["gbs", "nwb", "bmw"]
 
 ## Search type preferences
 
@@ -29,14 +30,15 @@ AREAS = ["sby", "pen"]
 # For instance, https://sfbay.craigslist.org/search/apa find apartments for rent.
 # https://sfbay.craigslist.org/search/sub finds sublets.
 # You only need the last 3 letters of the URLs.
-CRAIGSLIST_HOUSING_SECTION = 'apa'
+# aap: all apartments, nfa:all no-fee apartments, abo:by-owner apartments only
+CRAIGSLIST_HOUSING_SECTION = 'aap'
 
 ## System settings
 
 # How long we should sleep between scrapes of Craigslist.
 # Too fast may get rate limited.
 # Too slow may miss listings.
-SLEEP_INTERVAL = 3 * 60 * 60 # 3 hours
+SLEEP_INTERVAL = 1 * 60 * 60 # 1 hours
 
 
 # Any private settings are imported here.
