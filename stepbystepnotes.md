@@ -268,11 +268,11 @@ sudo apt-get install postgresql
 add <new user> and <new database>
 ```
 sudo su - postgres
-
 psql
+```
 
 set a password for postgres
-
+```
 \password postgres
 
 CREATE USER <dbuser> WITH PASSWORD 'password';
@@ -282,7 +282,7 @@ CREATE DATABASE <exampledb> OWNER <dbuser>;
 GRANT ALL PRIVILEGES ON DATABASE <exampledb> to <dbuser>;
 
 \q
-
+```
 
 
 
