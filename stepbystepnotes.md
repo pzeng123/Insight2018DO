@@ -339,3 +339,15 @@ sudo docker-compose up -d
 sudo docker-compose run --rm web python ./instance/db_create.py
 ```
 
+
+
+docker stop and remove:
+List all containers (only IDs)
+docker ps -aq
+Stop all running containers
+docker stop $(docker ps -aq)
+Remove all containers
+docker rm $(docker ps -aq)
+Remove all images
+docker rmi $(docker images -q)
+
