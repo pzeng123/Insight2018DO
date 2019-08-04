@@ -316,3 +316,26 @@ services:
 volumes:
   static-content:
 
+
+
+
+# 2019 new practice
+after created a new aws ubuntu ec2 instance,
+git clone this repo
+```
+git clone https://github.com/pzeng123/Insight2018DO.git
+```
+install docker and docker-compose:
+```
+sudo apt-get update
+sudo apt install docker.io
+sudo apt install docker-compose
+```
+
+run docker-compose
+```
+sudo docker-compose build
+sudo docker-compose up -d
+sudo docker-compose run --rm web python ./instance/db_create.py
+```
+
