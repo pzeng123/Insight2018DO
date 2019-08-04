@@ -15,7 +15,7 @@ def scrape_area(area):
     """
     cl_h = CraigslistHousing(site=project.scraper_setting.CRAIGSLIST_SITE, area=area, category=project.scraper_setting.CRAIGSLIST_HOUSING_SECTION,
                              filters={'max_price': project.scraper_setting.MAX_PRICE, "min_price": project.scraper_setting.MIN_PRICE})
-    results = []
+    results_count = 0
     gen = cl_h.get_results(sort_by='newest', geotagged=True, limit=30)
     while True:
         try:
@@ -30,7 +30,8 @@ def scrape_area(area):
 
         listing = session.query(Listing).filter_by(cl_id=result["id"]).first()
         
-        session.close()
+        # todo 1 not sure
+        # session.close()
         
         # Don't store the listing if it already exists.
         if listing is None:
@@ -73,12 +74,13 @@ def scrape_area(area):
                 return
                 
 
+            results_count += 1
             # Save the listing so we don't grab it again.
             session.add(listing)
             session.commit()
             session.close()
 
-    return results
+    return results_count
 
 
 def do_scrape():
@@ -87,9 +89,11 @@ def do_scrape():
     """
 
     # Get all the results from craigslist.
-    all_results = []
+    all_results_count = 0
     for area in project.scraper_setting.AREAS:
-        all_results += scrape_area(area)
+        temp = scrape_area(area)
+        all_results_count += temp
+        print("  In {}: got {} results".format(area, temp))
 
-    print("{}: Got {} results".format(time.ctime(), len(all_results)))
+    print("{}: got total {} results".format(time.ctime(), all_results_count))
 
