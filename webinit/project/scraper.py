@@ -17,6 +17,8 @@ def scrape_area(area):
                              filters={'max_price': project.scraper_setting.MAX_PRICE, "min_price": project.scraper_setting.MIN_PRICE})
     results_count = 0
     gen = cl_h.get_results(sort_by='newest', geotagged=True, limit=30)
+    for i in gen:
+        print(i)
     while True:
         try:
             result = next(gen)
@@ -34,8 +36,7 @@ def scrape_area(area):
         # session.close()
         
         # Don't store the listing if it already exists.
-        if listing is None:
-            
+        if listing is None:         
 
             lat = 0
             lon = 0
@@ -70,9 +71,9 @@ def scrape_area(area):
                     area=result["area"],
                 )
             except Exception:
+                print("listing exception")
                 session.close()
-                return
-                
+                return                
 
             results_count += 1
             # Save the listing so we don't grab it again.
